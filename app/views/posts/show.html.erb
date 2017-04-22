@@ -6,7 +6,7 @@
 <div class="fieldset">
   <dl>
       <dt class="label label-default"><%= model_class.human_attribute_name(:content) %></dt>
-      <dd><pre class="prettyprint"><%= @post.content %></pre></dd>
+      <dd><span class="aliceblue"><%= @post.content %></span></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:state) %></dt>
       <dd><pre class="prettyprint"><%= @post.state %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:scheduled_at) %></dt>
@@ -17,14 +17,12 @@
       <dd><pre class="prettyprint"><%= @post.status %></pre></dd>
       <dt class="label label-default"><%= t('helpers.post.preview') %></dt>
       <dd>
-        <pre class="prettyprint">
-          <ul class="list-group">
-            <li class="list-group-item">Serialized into Total tweets : <%= @seralized_post.serialized_content.length %> </li>
-            <% @seralized_post.serialized_content.each do |content| %>
-              <li class="list-group-item"> <%= content %> </li>
-            <% end %>
-          </ul>
-        </pre>
+        <ul class="list-group" id="tweet-preview">
+          <li class="list-group-item">Serialized into Total tweets : <%= @seralized_post.serialized_content.length %> </li>
+          <% @seralized_post.serialized_content.each do |content| %>
+            <li class="list-group-item"> <%= content %> </li>
+          <% end %>
+        </ul>
       </dd>
 
   </dl>

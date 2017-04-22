@@ -21,3 +21,16 @@
 form.docuement-upload-form {
   margin: 0 5px 0 5px;
 }
+
+.aliceblue {
+  background-color: aliceblue;
+}
+
+#tweet-preview.list-group {
+
+    li.list-group-item, li.list-group-item:first-child {
+      background-color: aliceblue;
+      height: 60px;
+      margin: 10px;
+    }
+}
