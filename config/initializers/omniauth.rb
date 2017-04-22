@@ -1,5 +1,5 @@
-TWITTER_KEY = ENV['TWITTER_KEY'] "cbCzLV067II6ngR6yXEsg8yXR"
-TWITTER_SECRET = ENV['TWITTER_SECRET'] "O2N2fsPem90AIvovApZrzY0JbKjkq0zayri4eqFEPZ56PpsZ3O"
+TWITTER_KEY = ENV['TWITTER_KEY']
+TWITTER_SECRET = ENV['TWITTER_SECRET']
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :twitter, TWITTER_KEY, TWITTER_SECRET,
     {
