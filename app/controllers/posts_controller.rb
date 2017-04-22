@@ -77,6 +77,7 @@ class PostsController < ApplicationController
     def post_params
       params[:post][:user_id] = current_user.id
       # byebug
+      params[:post][:scheduled_at] = params[:post][:scheduled_at].to_time.localtime if params[:post][:scheduled_at].present?
       params[:post][:scheduled_at] = Time.now if params[:post][:tweet_now] == "on"
       params.require(:post).permit(:content, :state, :scheduled_at, :user_id)
     end
