@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  upload_doc: MyString
+  resource_type: MyString
+  status: MyString
+  records_processed: MyString
+  posts_added: MyString
+  posts_rejected: MyString
+  user: one
+
+two:
+  upload_doc: MyString
+  resource_type: MyString
+  status: MyString
+  records_processed: MyString
+  posts_added: MyString
+  posts_rejected: MyString
+  user: two
