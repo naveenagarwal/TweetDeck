@@ -1,4 +1,6 @@
 class Document < ApplicationRecord
+  default_scope { order("id DESC") }
+
   belongs_to :user
 
   mount_uploader :upload_doc, DocumentUploader
@@ -6,4 +8,9 @@ class Document < ApplicationRecord
   validates_size_of :upload_doc,
     maximum: 1.megabyte,
     message: "Attachment size exceeds the allowable limit (1 MB)."
+
+  def output_filename
+    filename = upload_doc.file.file
+    @output_filename ||= "#{File.dirname(filename)}/#{File.basename(filename, '.csv')}-output.csv"
+  end
 end

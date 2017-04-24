@@ -1,6 +1,5 @@
 class TwitterWorker
   include Sidekiq::Worker
-
   sidekiq_options retry: false
 
   def perform(post_id, profile_id)

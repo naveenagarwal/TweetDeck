@@ -37,7 +37,7 @@
     <div class="form-group">
       <%= f.label :scheduled_at, class: 'control-label col-md-2' %>
       <div class="col-md-5">
-        <%= f.datetime_field :scheduled_at, class: 'text_field form-control' %>
+        <%= f.datetime_field :scheduled_at, class: 'text_field form-control', value: @post.scheduled_at.try(:localtime).try(:strftime,"%Y-%m-%dT%H:%M") %>
       </div>
     </div>
   </div>

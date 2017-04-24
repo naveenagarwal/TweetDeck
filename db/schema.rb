@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20170422112115) do
     t.string   "records_processed"
     t.string   "posts_added"
     t.string   "posts_rejected"
+    t.string   "job_id"
+    t.string   "queue_name"
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
@@ -33,11 +35,13 @@ ActiveRecord::Schema.define(version: 20170422112115) do
     t.text     "job_id",       limit: 65535
     t.text     "queue_name",   limit: 65535
     t.integer  "profile_id"
+    t.integer  "document_id"
     t.datetime "deleted_at"
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.datetime "scheduled_at"
+    t.index ["document_id"], name: "index_posts_on_document_id", using: :btree
     t.index ["profile_id"], name: "index_posts_on_profile_id", using: :btree
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end

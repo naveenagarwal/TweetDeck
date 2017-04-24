@@ -1,0 +1,41 @@
+<%- model_class = Document -%>
+<div class="page-header">
+  <h3>
+    <%=t '.title', default: model_class.model_name.human.pluralize.titleize %>
+  </h3>
+
+</div>
+<%= paginate @documents %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th><%= t("helpers.document.name") %></th>
+      <th><%= t("helpers.document.output") %></th>
+      <th><%= model_class.human_attribute_name(:resource_type) %></th>
+      <th><%= model_class.human_attribute_name(:status) %></th>
+      <th><%= model_class.human_attribute_name(:records_processed) %></th>
+      <th><%= model_class.human_attribute_name(:posts_added) %></th>
+      <th><%= model_class.human_attribute_name(:posts_rejected) %></th>
+      <th><%= model_class.human_attribute_name(:job_id) %></th>
+      <th><%= model_class.human_attribute_name(:queue_name) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.file.file %></td>
+        <td><%= link_to File.basename(document.output_filename), document.output_filename if File.exists?(document.output_filename) %></td>
+        <td><%= document.resource_type %></td>
+        <td><%= document.status %></td>
+        <td><%= document.records_processed %></td>
+        <td><%= document.posts_added %></td>
+        <td><%= document.posts_rejected %></td>
+        <td><%= document.job_id %></td>
+        <td><%= document.queue_name %></td>
+        <td><%=l document.created_at.localtime, format: :long %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @documents %>

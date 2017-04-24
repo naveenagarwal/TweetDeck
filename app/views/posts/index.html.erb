@@ -2,13 +2,19 @@
 <div class="page-header">
   <h3>
     <%=t '.title', default: model_class.model_name.human.pluralize.titleize %>
+    <%= link_to t("helpers.link.posts.indiex.schedule_posts"),
+      "javascript:void(0);",
+      id: "schedule-posts-link",
+      class: "btn btn-primary",
+      data: {
+          url: bulk_update_posts_path,
+          method: "put"
+        } %>
 
     <%= link_to t('.new', default: t("helpers.links.new")),
             new_post_path,
             class: 'btn btn-primary pull-right' %>
 
-    <!-- <form action="/document" class="form-inline pull-right docuement-upload-form"
-      id="document-file-post-form" enctype='multipart/form-data' method="post"> -->
     <%= form_tag('/document', multipart: true, id: "document-file-post-form", class: "form-inline pull-right docuement-upload-form") do -%>
       <input type="hidden" value="Post" name="resource_type">
       <div class="form-group">
@@ -16,13 +22,17 @@
         <input type="file" name="file" class="form-control" id="document-file-posts">
       </div>
     <% end -%>
+    <%= link_to t("helpers.links.sample_post_csv"),
+            "/post_sample.csv",
+            class: 'btn btn-primary pull-right' %>
   </h3>
 
 </div>
+<%= paginate @posts %>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th>Select All<input type="checkbox" id="select-all-posts"></th>
       <th><%= model_class.human_attribute_name(:content) %></th>
       <th><%= model_class.human_attribute_name(:state) %></th>
       <th><%= model_class.human_attribute_name(:scheduled_at) %></th>
@@ -37,15 +47,19 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
-        <td><%= post.id %></td>
-          <td><%= post.content %></td>
-          <td><%= post.state.humanize %></td>
-          <td><%=l(post.scheduled_at, format: :long) rescue nil %></td>
-          <td><%=l(post.sent_at, format: :long) rescue nil %></td>
-          <td><%= post.job_id %></td>
-          <td><%= post.queue_name %></td>
-          <td><%= post.status %></td>
-        <td><%=l post.created_at, format: :long %></td>
+        <td>
+          <% if post.can_schedule? %>
+            <input type="checkbox" class="select-post" data-id="<%= post.id%>">
+          <% end %>
+        </td>
+        <td><%= post.content %></td>
+        <td><%= post.state.humanize %></td>
+        <td><%=l(post.scheduled_at.localtime, format: :long) rescue nil %></td>
+        <td><%=l(post.sent_at.localtime, format: :long) rescue nil %></td>
+        <td><%= post.job_id %></td>
+        <td><%= post.queue_name %></td>
+        <td><%= post.status %></td>
+        <td><%=l post.created_at.localtime, format: :long %></td>
         <td>
           <%= link_to post_path(post), class: 'btn btn-xs', title: "#{ t('.show', default: t('helpers.links.show')) }" do %>
             <%= glyph 'info-sign' %>
@@ -56,8 +70,15 @@
           <%= link_to post_path(post), method: :delete, data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-xs', title: "#{ t('.destroy', default: t('helpers.links.destroy')) }" do %>
             <%= glyph 'remove' %>
           <%- end -%>
+          <%= link_to new_post_path(template: post.id), class: 'btn btn-xs', title: "#{ t('helpers.links.use_this_as_template') }" do %>
+            <%= glyph 'copy' %>
+          <%- end -%>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @posts %>
+
+<%= render "schedule_multiple_model" %>
+

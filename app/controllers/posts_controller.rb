@@ -4,7 +4,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = current_user.posts
+    page = params[:page] || 1
+    @posts = current_user.posts.page page
   end
 
   # GET /posts/1
@@ -15,7 +16,8 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    content = current_user.posts.find_by(id: params[:template]).try(:content)
+    @post = Post.new(content: content)
   end
 
   # GET /posts/1/edit
@@ -67,6 +69,18 @@ class PostsController < ApplicationController
     end
   end
 
+  def bulk_update
+    bulk_permitted_params
+    current_user.posts.where(id: params[:ids].map(&:to_i)).update_all(
+        scheduled_at: params[:data][:scheduled_at]
+      )
+    profile = current_user.profiles.where(provider: 'twitter').first
+    current_user.posts.where(id: params[:ids]).each do |post|
+      post.schedule(profile, DEFAULT_QUEUE)
+    end
+    render json: { message: 'Posts were successfully updated.' }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -79,5 +93,10 @@ class PostsController < ApplicationController
       params[:post][:scheduled_at] = params[:post][:scheduled_at].to_time.localtime if params[:post][:scheduled_at].present?
       params[:post][:scheduled_at] = Time.now if params[:post][:tweet_now] == "on"
       params.require(:post).permit(:content, :state, :scheduled_at, :user_id)
+    end
+
+    def bulk_permitted_params
+      params[:data][:scheduled_at] = params[:data][:scheduled_at].to_time.localtime if params[:data][:scheduled_at].present?
+      params.require(:data).permit(:scheduled_at)
     end
 end

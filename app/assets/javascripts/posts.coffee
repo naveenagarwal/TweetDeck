@@ -13,6 +13,23 @@ TweetDeck.createModule("TweetDeck.posts", ->
       $("input#post_tweet_now").on "click", (e) ->
         enableDisableScheduledAt($(this))
 
+    if $("input#select-all-posts").length > 0
+      $("input#select-all-posts").on "click", () ->
+        if $(this).prop("checked")
+          $("input.select-post").prop("checked", true)
+        else
+          $("input.select-post").prop("checked", false)
+
+    if $("a#schedule-posts-link").length > 0
+      $("a#schedule-posts-link").on "click", (e) =>
+        e.preventDefault()
+        if $("input.select-post:checked").length > 0
+          showScheduleMultipleModal()
+
+    if $("button#schedule-multiple-posts-button").length > 0
+      $("button#schedule-multiple-posts-button").unbind('click').bind "click", (e) ->
+        e.preventDefault()
+        showScheduleMultiplePosts()
 
   enableDisableScheduledAt = (el) ->
     if el.prop("checked")
@@ -31,7 +48,25 @@ TweetDeck.createModule("TweetDeck.posts", ->
       $(".schedule-input input:not(:checkbox)").val('')
       $("input#post_scheduled_at").prop('disabled', false)
 
+  showScheduleMultipleModal = ->
+    $("#scheduleMultiplePosts").modal("show")
 
+  showScheduleMultiplePosts = ->
+    return if $("input.select-post:checked").length == 0 || $("#scheduled_at").val().length == 0
+    ids = []
+    $("input.select-post:checked").map ->
+      ids.push($(this).data("id"))
+    scheduled_at = $("#scheduled_at").val()
+
+    $("#status-model .modal-body p").html('')
+    $.ajax
+      url: $("a#schedule-posts-link").data("url"),
+      method: $("a#schedule-posts-link").data("method")
+      data: { ids: ids, data: { scheduled_at: scheduled_at } }
+      success: (data)->
+        $("#scheduleMultiplePosts").modal("hide")
+        $("#status-model").modal("show")
+        $("#status-model .modal-body p").html(data.message)
 
 
   init = ->

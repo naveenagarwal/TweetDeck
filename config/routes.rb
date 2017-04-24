@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
 
-  resources :document, only: [:create]
+  resources :document, only: [:index, :create]
 
   # get 'omniauth_session/create'
 
   devise_for :users
-  resources :posts
+  resources :posts do
+    collection do
+      put :bulk_update
+    end
+  end
 
   root to: "home#index"
 

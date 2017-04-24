@@ -8,6 +8,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.text :job_id
       t.text :queue_name
       t.references :profile, index: true
+      t.references :document, index: true
       t.datetime :deleted_at
       t.references :user, index: true, foreign_key: true
 

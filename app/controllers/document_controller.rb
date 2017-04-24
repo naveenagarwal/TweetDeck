@@ -1,4 +1,10 @@
 class DocumentController < ApplicationController
+
+  def index
+    page = params[:page] || 1
+    @documents = current_user.documents.page page
+  end
+
   def create
     @document = current_user.documents.new
     @document.upload_doc = params[:file]
@@ -6,8 +12,8 @@ class DocumentController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        PostDocumentWorker.perform_async(@document.id)
-
+        job_id = PostDocumentWorker.perform_async(@document.id)
+        @document.update(job_id: job_id, queue_name: 'default')
         format.html { redirect_to posts_path, notice: 'Document enqueued for processing.' }
         format.json { render :show, status: :created, location: @document }
       else
