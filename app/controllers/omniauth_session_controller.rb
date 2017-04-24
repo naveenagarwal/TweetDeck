@@ -16,7 +16,7 @@ class OmniauthSessionController < ApplicationController
     return redirect_to new_user_session_path,
       error: "Error - #{@user.errors.full_messages.join(", ")}, \
         #{@profile.errors.full_messages.join(", ")}," if any_error?
-    byebug
+
     sign_in_and_redirect(@user)
   end
 
