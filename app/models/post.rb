@@ -24,6 +24,14 @@ class Post < ApplicationRecord
     state == "ready"
   end
 
+  def tweeted?
+    state == "tweeted"
+  end
+
+  def retweeted
+    state == "retweeted"
+  end
+
   def schedule(profile, queue)
     return if !valid_post_to_be_scheduled? || profile.blank? || profile_mismatch?(profile)
     self.job_id = TwitterWorker.perform_at(scheduled_at, id, profile.id)
@@ -60,7 +68,7 @@ class Post < ApplicationRecord
     schedule(Profile.find(profile_id, "default"))
   end
 
-  def can_schedule?
+  def can_set_schedule_at?
     ["ready", "tweeted"].any? { |allowed_state|
       state == allowed_state
     }
@@ -79,7 +87,8 @@ class Post < ApplicationRecord
   end
 
   def valid_post_to_be_scheduled?
-    scheduled_at.present? || job_id.blank?
+    scheduled_at.present? && ((job_id.blank? && ready?) ||
+      (scheduled_at.present? && tweeted?))
   end
 
 end

@@ -48,7 +48,7 @@
     <% @posts.each do |post| %>
       <tr>
         <td>
-          <% if post.can_schedule? %>
+          <% if post.can_set_schedule_at? %>
             <input type="checkbox" class="select-post" data-id="<%= post.id%>">
           <% end %>
         </td>

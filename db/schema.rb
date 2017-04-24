@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20170422112115) do
     t.integer  "profile_id"
     t.integer  "document_id"
     t.datetime "deleted_at"
+    t.text     "tweet_ids",    limit: 65535
+    t.datetime "retweeted_at"
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
