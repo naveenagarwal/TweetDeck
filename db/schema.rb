@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422112115) do
+ActiveRecord::Schema.define(version: 20170424133550) do
 
   create_table "documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "upload_doc"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20170422112115) do
     t.index ["user_id"], name: "index_documents_on_user_id", using: :btree
   end
 
+  create_table "media", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "upload_doc"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_media_on_post_id", using: :btree
+  end
+
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "content",      limit: 65535
     t.string   "state"
@@ -39,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170422112115) do
     t.datetime "deleted_at"
     t.text     "tweet_ids",    limit: 65535
     t.datetime "retweeted_at"
+    t.text     "media_ids",    limit: 65535
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -79,6 +88,7 @@ ActiveRecord::Schema.define(version: 20170422112115) do
   end
 
   add_foreign_key "documents", "users"
+  add_foreign_key "media", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
 end

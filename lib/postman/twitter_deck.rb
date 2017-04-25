@@ -1,14 +1,14 @@
 module Postman
   class TwitterDeck
 
-    def post_tweet(message, profile)
+    def post_tweet(message, profile, options={})
       @client = client(profile)
       begin
-        tweet = @client.update(message)
+        tweet = @client.update(message, options)
         { status: true, tweet_id: tweet.id }
       rescue Exception => e
         Rails.logger.error "Error in sending tweet for #{profile.uid},#{profile.name} - #{e.to_s}\n#{e.backtrace}"
-        { status: false, message: e.message}
+        { status: false, error: e.message}
       end
     end
 
@@ -16,11 +16,14 @@ module Postman
       @client = client(profile)
       begin
         tweet = @client.retweet(tweet_id)
-        { status: true }
       rescue Exception => e
-        Rails.logger.error "Error in sending tweet for #{profile.uid},#{profile.name} - #{e.to_s}\n#{e.backtrace}"
-        { status: false, message: e.message }
+        Rails.logger.error "Error in reteeting tweet for #{profile.uid},#{profile.name}, tweet id #{tweet_id} - #{e.to_s}\n#{e.backtrace}"
       end
+    end
+
+    def upload(file, profile)
+      @client = client(profile)
+      @client.upload(file)
     end
 
     private

@@ -12,6 +12,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.datetime :deleted_at
       t.text :tweet_ids
       t.datetime :retweeted_at
+      t.text :media_ids
       t.references :user, index: true, foreign_key: true
 
       t.timestamps

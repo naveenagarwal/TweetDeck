@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  before_action :check_if_editable, only: [:edit, :update]
   # GET /posts
   # GET /posts.json
   def index
@@ -91,12 +92,17 @@ class PostsController < ApplicationController
     def post_params
       params[:post][:user_id] = current_user.id
       params[:post][:scheduled_at] = params[:post][:scheduled_at].to_time.localtime if params[:post][:scheduled_at].present?
-      params[:post][:scheduled_at] = Time.now if params[:post][:tweet_now] == "on"
-      params.require(:post).permit(:content, :state, :scheduled_at, :user_id)
+      params[:post][:scheduled_at] = Time.now if params[:tweet_now] == "on"
+      # params.require(:post).permit(:content, :state, :scheduled_at, :user_id, media_attributes: [:upload_doc])
+      params.require(:post).permit!
     end
 
     def bulk_permitted_params
       params[:data][:scheduled_at] = params[:data][:scheduled_at].to_time.localtime if params[:data][:scheduled_at].present?
       params.require(:data).permit(:scheduled_at)
+    end
+
+    def check_if_editable
+      return redirect_to @post, alert: "You can not edit this post" unless @post.editable?
     end
 end

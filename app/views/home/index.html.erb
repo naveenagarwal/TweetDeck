@@ -1,5 +1,58 @@
-<h3>Here we will show your tweeter deck activity</h3>
+<div class="row" id="home">
 
-<p>
-  For now, please manage your <%= link_to "posts", posts_path %>
-</p>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("drafted.png") %>
+      <div class="caption text-center">
+        <h3>Drafted Tweets</h3>
+        <p class="text-info"><%= @stats[:drafted] %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("ready.png") %>
+      <div class="caption text-center">
+        <h3>Ready Tweets</h3>
+        <p class="text-success"><%= @stats[:ready] %></p>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("tweeted.png") %>
+      <div class="caption text-center">
+        <h3>Tweeted tweets</h3>
+        <p class="text-warning"><%= @stats[:tweeted] %></p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("retweeted.png") %>
+      <div class="caption text-center">
+        <h3>Retweeted Tweets</h3>
+        <p class="text-danger"><%= @stats[:retweeted] %></p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("imported.png") %>
+      <div class="caption text-center">
+        <h3>Posts imported</h3>
+        <p class="text-active"><%= @stats[:imported_posts] %></p>
+      </div>
+    </div>
+  </div>
+
+</div>

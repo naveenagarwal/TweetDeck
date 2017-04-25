@@ -34,3 +34,21 @@ form.docuement-upload-form {
       margin: 10px;
     }
 }
+
+#home .thumbnail {
+  img {
+    width: 171px;
+    height: 180px;
+  }
+  .caption p {
+    font-size: 20px;
+    font-weight: bolder;
+  }
+  .caption h3 {
+    color: grey;
+  }
+}
+
+.navbar-default .navbar-header .navbar-brand {
+  font-weight: bolder;
+}

@@ -30,7 +30,7 @@
     <div class="form-group">
       <label class="control-label col-md-2" for="post_tweet_now"> Tweet now </label>
       <div class="col-sm-1">
-        <input class="text_field form-control" type="checkbox" name="post[tweet_now]" id="post_tweet_now">
+        <input class="text_field form-control" type="checkbox" name="tweet_now" id="post_tweet_now">
       </div>
     </div>
 
@@ -40,7 +40,21 @@
         <%= f.datetime_field :scheduled_at, class: 'text_field form-control', value: @post.scheduled_at.try(:localtime).try(:strftime,"%Y-%m-%dT%H:%M") %>
       </div>
     </div>
+
   </div>
+
+
+  <% unless @post.persisted? %>
+    <% 4.times { @post.media.build } if @post.media.size == 0 %>
+    <%= f.fields_for :media do |media_form| %>
+      <div class="form-group">
+        <%= media_form.label :upload_doc, "Media", class: 'control-label col-md-2' %>
+        <div class="col-md-5">
+          <%= media_form.file_field :upload_doc, multiple: false, class: 'text_field form-control', accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="form-group">
     <div class='col-md-offset-2 col-md-5'>

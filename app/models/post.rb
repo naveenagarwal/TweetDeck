@@ -4,10 +4,19 @@ class Post < ApplicationRecord
   default_scope { where("deleted_at IS NULL").order("id DESC") }
 
   VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweeted']
+  EDITABLE_STATES = ['drafted', 'ready']
 
   belongs_to :user
   belongs_to :profile, optional: true
   belongs_to :document, optional: true
+
+  has_many :media, class_name: Media.name, inverse_of: :post
+
+  accepts_nested_attributes_for :media,
+    reject_if: proc { |attributes| attributes['upload_doc'].blank? },
+    limit: 4,
+    allow_destroy: true
+
 
   validates :content, :state, presence: true
   validates :state, inclusion: { in: VALID_STATES }
@@ -30,6 +39,10 @@ class Post < ApplicationRecord
 
   def retweeted
     state == "retweeted"
+  end
+
+  def editable?
+    EDITABLE_STATES.any? { |editable_state| state == editable_state }
   end
 
   def schedule(profile, queue)
