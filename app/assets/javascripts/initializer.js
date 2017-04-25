@@ -41,6 +41,28 @@ TweetDeck.createModule = function(namespace, module) {
 var ready = function() {
   TweetDeck.posts.init();
   TweetDeck.documents.init();
+
+  // show spinner on AJAX start
+  $(document).ajaxStart(function(){
+    $("#spinner").removeClass("hide");
+    $(".container").addClass("hide");
+
+  });
+  // hide spinner on AJAX stop
+  $(document).ajaxStop(function(){
+    $("#spinner").addClass("hide");
+    $(".container").removeClass("hide");
+  });
+
+  $(document).on("turbolinks:request-start", function(){
+    $("#spinner").removeClass("hide");
+    $(".container").addClass("hide");
+  });
+
+  $(document).on("turbolinks:request-end", function(){
+    $("#spinner").addClass("hide");
+    $(".container").removeClass("hide");
+  });
 };
 
 $(document).ready(ready);
