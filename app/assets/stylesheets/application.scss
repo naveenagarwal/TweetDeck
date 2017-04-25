@@ -52,3 +52,15 @@ form.docuement-upload-form {
 .navbar-default .navbar-header .navbar-brand {
   font-weight: bolder;
 }
+
+.nav.navbar-nav li a, .navbar a.navbar-brand {
+   color: #fff;
+ }
+
+.navbar.navbar-default {
+  background-color: #2793C9;
+}
+
+.nav.navbar-nav ul.dropdown-menu.custom-ul li a {
+  color: grey;
+}

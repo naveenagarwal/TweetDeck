@@ -42,7 +42,7 @@
             <% if current_user %>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu custom-ul">
                   <li><%= link_to "Logout", destroy_user_session_path, class: "btn", method: :delete %></li>
                 </ul>
               </li>

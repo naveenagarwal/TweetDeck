@@ -50,7 +50,17 @@
       <%= image_tag("imported.png") %>
       <div class="caption text-center">
         <h3>Posts imported</h3>
-        <p class="text-active"><%= @stats[:imported_posts] %></p>
+        <p class="text-active"><%= @stats[:imported_posts].to_i %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("rejected.jpeg") %>
+      <div class="caption text-center">
+        <h3>Posts rejected</h3>
+        <p class="text-danger"><%= @stats[:rejected_posts].to_i %></p>
       </div>
     </div>
   </div>

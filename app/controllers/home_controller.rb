@@ -10,7 +10,8 @@ class HomeController < ApplicationController
     [:drafted, :ready, :tweeted, :retweeted].each do |state|
       stats[state] = current_user.posts.where(state: state.to_s).count
     end
-    stats[:imported_posts] = current_user.posts.where("document_id IS NOT NULL").count
+    stats[:imported_posts] = current_user.documents.sum(:posts_added)
+    stats[:rejected_posts] = current_user.documents.sum(:posts_rejected)
     stats
   end
 end
