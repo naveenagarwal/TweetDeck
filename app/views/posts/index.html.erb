@@ -53,7 +53,7 @@
           <% end %>
         </td>
         <td><%= post.content %></td>
-        <td><%= post.state.humanize %></td>
+        <td class="<%= get_class_by_state(post.state) %>"><%= post.state.humanize %></td>
         <td><%=l(post.scheduled_at.localtime, format: :long) rescue nil %></td>
         <td><%=l(post.sent_at.localtime, format: :long) rescue nil %></td>
         <td><%= post.job_id %></td>
