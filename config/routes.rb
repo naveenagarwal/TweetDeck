@@ -18,5 +18,8 @@ Rails.application.routes.draw do
 
   # sidekiq monitoring
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  authenticate :user do
+    mount Sidekiq::Web, at: "/sidekiq"
+  end
+  # mount Sidekiq::Web => '/sidekiq'
 end
