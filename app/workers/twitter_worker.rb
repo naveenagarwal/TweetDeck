@@ -31,7 +31,9 @@ class TwitterWorker
           status, sent_at = tweeted[:status] == false ? [tweeted[:error], nil]
             : ["Tweeted", time]
 
-          post.update(status: status, sent_at: sent_at, state: "tweeted")
+          state = tweeted[:status] == false ? post.state : "tweeted"
+
+          post.update(status: status, sent_at: sent_at, state: state)
           tweet_ids << tweeted[:tweet_id]
           #reset the media_ids
           options = {}
