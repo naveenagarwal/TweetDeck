@@ -78,7 +78,7 @@ class Post < ApplicationRecord
 
   def reschedule
     dequeue
-    schedule(Profile.find(profile_id, "default"))
+    schedule(Profile.find(profile_id, "default")) if profile_id.present?
   end
 
   def can_set_schedule_at?
