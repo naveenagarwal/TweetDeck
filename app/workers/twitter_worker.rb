@@ -1,6 +1,6 @@
 class TwitterWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  # sidekiq_options retry: false
 
   # TODO - refactor to make this IO efficent. Bring in Threading
 
