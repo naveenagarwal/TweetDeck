@@ -25,29 +25,28 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <% if current_user %>
-
-          <ul class="nav navbar-nav">
-            <li class="<%= 'active' if current_page?(posts_path) %>">
-              <%= link_to t("helpers.link.posts"), posts_path %>
-            </li>
-            <li class="<%= 'active' if current_page?(document_index_path) %>" >
-              <%= link_to t("helpers.link.documents"), document_index_path %>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="To be implemented">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <b class="caret"></b></a>
-              <ul class="dropdown-menu custom-ul">
-                <li><%= link_to "Logout", destroy_user_session_path, class: "btn", method: :delete %></li>
-              </ul>
-            </li>
-          </ul>
+            <ul class="nav navbar-nav">
+              <li class="<%= 'active' if current_page?(posts_path) %>">
+                <%= link_to t("helpers.link.posts"), posts_path %>
+              </li>
+              <li class="<%= 'active' if current_page?(document_index_path) %>" >
+                <%= link_to t("helpers.link.documents"), document_index_path %>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="To be implemented">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <b class="caret"></b></a>
+                <ul class="dropdown-menu custom-ul">
+                  <li><%= link_to "Logout", destroy_user_session_path, class: "btn", method: :delete %></li>
+                </ul>
+              </li>
+            </ul>
           <% end %>
         </div><!-- /.navbar-collapse -->
       </div>

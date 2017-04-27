@@ -3,7 +3,7 @@ require 'sidekiq/api'
 class Post < ApplicationRecord
   default_scope { where("deleted_at IS NULL").order("id DESC") }
 
-  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweeted']
+  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweet_ready', 'retweeted']
   EDITABLE_STATES = ['drafted', 'ready']
 
   belongs_to :user
@@ -37,8 +37,12 @@ class Post < ApplicationRecord
     state == "tweeted"
   end
 
-  def retweeted
+  def retweeted?
     state == "retweeted"
+  end
+
+  def retweet_ready?
+    state == "retweet_ready"
   end
 
   def editable?
@@ -82,7 +86,7 @@ class Post < ApplicationRecord
   end
 
   def can_set_schedule_at?
-    ["ready", "tweeted"].any? { |allowed_state|
+    ["ready", "tweeted", "retweet_ready"].any? { |allowed_state|
       state == allowed_state
     }
   end
@@ -101,7 +105,7 @@ class Post < ApplicationRecord
 
   def valid_post_to_be_scheduled?
     scheduled_at.present? && ((job_id.blank? && ready?) ||
-      (scheduled_at.present? && tweeted?))
+      (scheduled_at.present? && (tweeted? || retweet_ready? )))
   end
 
 end

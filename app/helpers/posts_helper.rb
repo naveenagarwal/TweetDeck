@@ -13,6 +13,8 @@ module PostsHelper
       "text-info"
     when "ready"
       "text-success"
+    when "retweet_ready"
+      "text-success"
     when "tweeted"
       "text-warning"
     when "retweeted"

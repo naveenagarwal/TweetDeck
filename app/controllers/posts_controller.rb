@@ -75,6 +75,9 @@ class PostsController < ApplicationController
     current_user.posts.where(id: params[:ids].map(&:to_i)).update_all(
         scheduled_at: params[:data][:scheduled_at]
       )
+    current_user.posts.where(id: params[:ids].map(&:to_i), state: "tweeted").update_all(
+        state: "retweet_ready"
+      )
     profile = current_user.profiles.where(provider: 'twitter').first
     current_user.posts.where(id: params[:ids]).each do |post|
       post.schedule(profile, DEFAULT_QUEUE)
