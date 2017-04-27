@@ -13,4 +13,10 @@ class Document < ApplicationRecord
     filename = upload_doc.file.file
     @output_filename ||= "#{File.dirname(filename)}/#{File.basename(filename, '.csv')}-output.csv"
   end
+
+  def output_url
+    output = upload_doc.url
+    output[".csv"] = "-output.csv"
+    output
+  end
 end

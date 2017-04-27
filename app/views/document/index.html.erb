@@ -24,8 +24,8 @@
   <tbody>
     <% @documents.each do |document| %>
       <tr>
-        <td><%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.file.file %></td>
-        <td><%= link_to File.basename(document.output_filename), document.output_filename if File.exists?(document.output_filename) %></td>
+        <td><%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.url %></td>
+        <td><%= link_to File.basename(document.output_filename), document.output_url if File.exists?(document.output_filename) %></td>
         <td><%= document.resource_type %></td>
         <td><%= document.status %></td>
         <td><%= document.records_processed %></td>
