@@ -47,10 +47,12 @@ Things you may want to cover:
         TWITTER_KEY=<your app key> TWITTER_SECRET=<your app secret> bundle exec rails server --binding=<public ip> -d
 
 * To restart the app
+
         kill $(cat tmp/pids/sidekiq.pid) && TWITTER_KEY=<your app key> TWITTER_SECRET=<your app secret> bundle exec sidekiq -d
 
         kill $(cat tmp/pids/server.pid) && TWITTER_KEY=<your app key> TWITTER_SECRET=<your app secret> bundle exec rails server --binding=<public ip> -d
 
 * To kill the app server and sidekiq process
+
         kill $(cat tmp/pids/server.pid) && kill $(cat tmp/pids/sidekiq.pid)
 
