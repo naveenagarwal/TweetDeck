@@ -3,7 +3,7 @@ require 'sidekiq/api'
 class Post < ApplicationRecord
   default_scope { where("deleted_at IS NULL").order("id DESC") }
 
-  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweet_ready', 'retweeted', 'dequeued']
+  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweet_ready', 'retweeted']
   EDITABLE_STATES = ['drafted', 'ready']
 
   belongs_to :user
@@ -69,7 +69,6 @@ class Post < ApplicationRecord
         job_dequeued = true
         self.job_id = nil
         self.queue_name = nil
-        self.state = "dequeued"
         save
         break
       end
@@ -84,7 +83,7 @@ class Post < ApplicationRecord
 
   def reschedule
     dequeue
-    schedule(Profile.find(profile_id, "default")) if profile_id.present?
+    schedule(Profile.find(profile_id), "default") if profile_id.present?
   end
 
   def can_set_schedule_at?
@@ -106,8 +105,10 @@ class Post < ApplicationRecord
   end
 
   def valid_post_to_be_scheduled?
-    scheduled_at.present? && ((job_id.blank? && ready?) ||
-      (scheduled_at.present? && (tweeted? || retweet_ready? )))
+    scheduled_at.present? && (
+        (job_id.blank? && ready?) ||
+        (scheduled_at.present? && (tweeted? || retweet_ready? ))
+      )
   end
 
 end

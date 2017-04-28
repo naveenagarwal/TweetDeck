@@ -32,8 +32,13 @@ class TwitterWorker
             : ["Tweeted", time]
 
           state = tweeted[:status] == false ? post.state : "tweeted"
-
-          post.update(status: status, sent_at: sent_at, state: state)
+          if profile.default_retweet_enable
+            state = "retweet_ready"
+            scheduled_at = profile.default_time_from_now
+          else
+            scheduled_at = post.scheduled_at
+          end
+          post.update(status: status, sent_at: sent_at, state: state, scheduled_at: scheduled_at)
           tweet_ids << tweeted[:tweet_id]
           #reset the media_ids
           options = {}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428124058) do
+ActiveRecord::Schema.define(version: 20170428161641) do
 
   create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -86,10 +86,11 @@ ActiveRecord::Schema.define(version: 20170428124058) do
     t.string   "uid"
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "default_interval"
     t.string   "default_interval_type"
+    t.boolean  "default_retweet_enable"
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 

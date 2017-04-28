@@ -26,6 +26,6 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:default_interval, :default_interval_type)
+    params.require(:profile).permit(:default_interval, :default_interval_type, :default_retweet_enable)
   end
 end
