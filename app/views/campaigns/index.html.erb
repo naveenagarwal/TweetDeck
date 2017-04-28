@@ -25,12 +25,13 @@
     <% @campaigns.each do |campaign| %>
       <tr>
         <td><%= campaign.id %></td>
-          <td><%= campaign.name %></td>
-          <td><%=l campaign.start_at.to_time.localtime, format: :long %></td>
-          <td><%= campaign.interval %></td>
-          <td><%= campaign.interval_type %></td>
-          <td><%= link_to t('helpers.campaign.view_posts'), posts_path(campaign_id: campaign.id) if campaign.posts.exists? %></td>
+        <td><%= campaign.name %></td>
+        <td><%=l campaign.start_at.to_time.localtime, format: :long %></td>
+        <td><%= campaign.interval %></td>
+        <td><%= campaign.interval_type %></td>
         <td><%=l campaign.created_at.localtime, format: :long %></td>
+
+        <td><%= link_to t('helpers.campaign.view_posts'), posts_path(campaign_id: campaign.id) if campaign.posts.exists? %></td>
         <td>
           <%= link_to campaign_path(campaign), class: 'btn btn-xs', title: "#{ t('.show', default: t('helpers.links.show')) }" do %>
             <%= glyph 'info-sign' %>

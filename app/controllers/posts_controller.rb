@@ -11,7 +11,7 @@ class PostsController < ApplicationController
 
     @posts = current_user.posts.where(conditions).includes(:campaign)
     @count = @posts.count
-    @posts = current_user.posts.where(conditions).includes(:campaign).page page
+    @posts = @posts.page page
   end
 
   # GET /posts/1
