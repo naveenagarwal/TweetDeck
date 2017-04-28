@@ -20,16 +20,46 @@ TweetDeck.createModule("TweetDeck.posts", ->
         else
           $("input.select-post").prop("checked", false)
 
+    if $("input#select-all-posts-for-delete").length > 0
+      $("input#select-all-posts-for-delete").on "click", () ->
+        if $(this).prop("checked")
+          $("input.select-post-for-delete").prop("checked", true)
+        else
+          $("input.select-post-for-delete").prop("checked", false)
+
     if $("a#schedule-posts-link").length > 0
       $("a#schedule-posts-link").on "click", (e) =>
         e.preventDefault()
         if $("input.select-post:checked").length > 0
-          showScheduleMultipleModal()
+          scheduleMultipleModal()
 
     if $("button#schedule-multiple-posts-button").length > 0
       $("button#schedule-multiple-posts-button").unbind('click').bind "click", (e) ->
         e.preventDefault()
         showScheduleMultiplePosts()
+
+    if $("a#dequeue-posts-link").length > 0
+      $("a#dequeue-posts-link").on "click", (e) =>
+        e.preventDefault()
+        if $("input.select-post:checked").length > 0
+          confirmDequeueModal()
+
+    if $("button#dequeue-button").length > 0
+      $("button#dequeue-button").unbind('click').bind "click", (e) ->
+        e.preventDefault()
+        dequeuePosts()
+
+    if $("a#delete-posts-link").length > 0
+      $("a#delete-posts-link").on "click", (e) =>
+        e.preventDefault()
+        if $("input.select-post-for-delete:checked").length > 0
+          confirmDeletePostsModal()
+
+    if $("button#delete-posts-button").length > 0
+      $("button#delete-posts-button").unbind('click').bind "click", (e) ->
+        e.preventDefault()
+        deletePosts()
+
 
   enableDisableScheduledAt = (el) ->
     if el.prop("checked")
@@ -51,7 +81,7 @@ TweetDeck.createModule("TweetDeck.posts", ->
   showScheduleMultipleModal = ->
     $("#scheduleMultiplePosts").modal("show")
 
-  showScheduleMultiplePosts = ->
+  scheduleMultiplePosts = ->
     return if $("input.select-post:checked").length == 0 || $("#scheduled_at").val().length == 0
     ids = []
     $("input.select-post:checked").map ->
@@ -65,6 +95,44 @@ TweetDeck.createModule("TweetDeck.posts", ->
       data: { ids: ids, data: { scheduled_at: scheduled_at } }
       success: (data)->
         $("#scheduleMultiplePosts").modal("hide")
+        $("#status-model").modal("show")
+        $("#status-model .modal-body p").html(data.message)
+
+  confirmDequeueModal = () ->
+    $("#dequeue-posts-confirm-model").modal("show")
+
+  confirmDeletePostsModal = () ->
+    $("#delete-posts-confirm-model").modal("show")
+
+  dequeuePosts = ->
+    return if $("input.select-post:checked").length == 0
+    ids = []
+    $("input.select-post:checked").map ->
+      ids.push($(this).data("id"))
+
+    $("#status-model .modal-body p").html('')
+    $.ajax
+      url: $("a#dequeue-posts-link").data("url"),
+      method: $("a#dequeue-posts-link").data("method")
+      data: { ids: ids }
+      success: (data)->
+        $("#dequeue-posts-confirm-model").modal("hide")
+        $("#status-model").modal("show")
+        $("#status-model .modal-body p").html(data.message)
+
+  deletePosts = ->
+    return if $("input.select-post-for-delete:checked").length == 0
+    ids = []
+    $("input.select-post-for-delete:checked").map ->
+      ids.push($(this).data("id"))
+
+    $("#status-model .modal-body p").html('')
+    $.ajax
+      url: $("a#delete-posts-link").data("url"),
+      method: $("a#delete-posts-link").data("method")
+      data: { ids: ids }
+      success: (data)->
+        $("#delete-posts-confirm-model").modal("hide")
         $("#status-model").modal("show")
         $("#status-model .modal-body p").html(data.message)
 

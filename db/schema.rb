@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424133550) do
+ActiveRecord::Schema.define(version: 20170428060247) do
+
+  create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "start_at"
+    t.integer  "interval"
+    t.string   "interval_type"
+    t.string   "state",         default: "created"
+    t.datetime "deleted_at"
+    t.integer  "user_id"
+    t.integer  "document_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["document_id"], name: "index_campaigns_on_document_id", using: :btree
+    t.index ["user_id"], name: "index_campaigns_on_user_id", using: :btree
+  end
 
   create_table "documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "upload_doc"
@@ -24,6 +39,8 @@ ActiveRecord::Schema.define(version: 20170424133550) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "campaign_id"
+    t.index ["campaign_id"], name: "index_documents_on_campaign_id", using: :btree
     t.index ["user_id"], name: "index_documents_on_user_id", using: :btree
   end
 
@@ -52,6 +69,10 @@ ActiveRecord::Schema.define(version: 20170424133550) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.datetime "scheduled_at"
+    t.integer  "campain_id"
+    t.integer  "campaign_id"
+    t.index ["campaign_id"], name: "index_posts_on_campaign_id", using: :btree
+    t.index ["campain_id"], name: "index_posts_on_campain_id", using: :btree
     t.index ["document_id"], name: "index_posts_on_document_id", using: :btree
     t.index ["profile_id"], name: "index_posts_on_profile_id", using: :btree
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
@@ -87,6 +108,8 @@ ActiveRecord::Schema.define(version: 20170424133550) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "campaigns", "documents"
+  add_foreign_key "campaigns", "users"
   add_foreign_key "documents", "users"
   add_foreign_key "media", "posts"
   add_foreign_key "posts", "users"

@@ -11,6 +11,7 @@
     <tr>
       <th><%= t("helpers.document.name") %></th>
       <th><%= t("helpers.document.output") %></th>
+      <th><%= t("helpers.campaign") %></th>
       <th><%= model_class.human_attribute_name(:resource_type) %></th>
       <th><%= model_class.human_attribute_name(:status) %></th>
       <th><%= model_class.human_attribute_name(:records_processed) %></th>
@@ -26,6 +27,7 @@
       <tr>
         <td><%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.url %></td>
         <td><%= link_to File.basename(document.output_filename), document.output_url if File.exists?(document.output_filename) %></td>
+        <td><%= link_to document.campaign.name, campaign_path(document.campaign) if document.campaign.present? %></td>
         <td><%= document.resource_type %></td>
         <td><%= document.status %></td>
         <td><%= document.records_processed %></td>

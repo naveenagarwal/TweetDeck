@@ -32,6 +32,9 @@
               <li class="<%= 'active' if current_page?(document_index_path) %>" >
                 <%= link_to t("helpers.link.documents"), document_index_path %>
               </li>
+              <li class="<%= 'active' if current_page?(campaigns_path) %>" >
+                <%= link_to t("helpers.link.campaigns"), campaigns_path %>
+              </li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group">
@@ -55,6 +58,8 @@
       <%= bootstrap_flash %>
       <%= yield %>
       <%= render "/shared/status_model" %>
+      <%= render "/shared/dequeue_confirm_model" %>
+      <%= render "/shared/delete_posts_confirm_model" %>
 
 
     </div>

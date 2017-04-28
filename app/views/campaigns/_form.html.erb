@@ -1,0 +1,53 @@
+<%= form_for @campaign, html: { class: 'form-horizontal', multipart: true } do |f| %>
+
+  <% if @campaign.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@campaign.errors.count, "error") %> prohibited this from being saved:</h4>
+
+      <ul>
+      <% @campaign.errors.full_messages.each do |msg| %>
+        <li class="alert alert-warning"><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, class: 'control-label col-md-2' %>
+    <div class="col-md-5">
+      <%= f.text_field :name, class: 'text_field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :start_at, class: 'control-label col-md-2' %>
+    <div class="col-md-5">
+      <%= f.datetime_field :start_at, class: 'text_field form-control', value: @campaign.start_at.try(:to_time).try(:localtime).try(:strftime,"%Y-%m-%dT%H:%M") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :interval, "In Every(Interval)", class: 'control-label col-md-2' %>
+    <div class="col-md-5">
+      <div class="col-md-6 interval-left">
+        <%= f.number_field :interval, class: 'text_field form-control' %>
+      </div>
+      <div class="col-md-6 interval-right">
+        <%= f.select :interval_type, Campaign::VALID_INTERVAL_TYPES.map{ |interval_type| [interval_type.humanize, interval_type] }, { include_blank: false }, { class: 'text_field form-control' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :document_id, "Upload posts", class: 'control-label col-md-2' %>
+    <div class="col-md-5">
+      <%= f.file_field :document_id, class: 'text_field form-control', name: "document" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+      <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                  campaigns_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+<% end %>

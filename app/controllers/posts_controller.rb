@@ -6,7 +6,12 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     page = params[:page] || 1
-    @posts = current_user.posts.page page
+    conditions = {}
+    conditions.merge!({campaign_id: params[:campaign_id]}) if params[:campaign_id].present?
+
+    @posts = current_user.posts.where(conditions).includes(:campaign)
+    @count = @posts.count
+    @posts = current_user.posts.where(conditions).includes(:campaign).page page
   end
 
   # GET /posts/1
@@ -72,7 +77,7 @@ class PostsController < ApplicationController
 
   def bulk_update
     bulk_permitted_params
-    current_user.posts.where(id: params[:ids].map(&:to_i)).update_all(
+    current_user.posts.where(id: params[:ids]).update_all(
         scheduled_at: params[:data][:scheduled_at]
       )
     current_user.posts.where(id: params[:ids].map(&:to_i), state: "tweeted").update_all(
@@ -83,6 +88,21 @@ class PostsController < ApplicationController
       post.schedule(profile, DEFAULT_QUEUE)
     end
     render json: { message: 'Posts were successfully updated.' }
+  end
+
+  def bulk_dequeue
+    current_user.posts.where(
+        id: params[:ids],
+        state: ["ready", "retweet_ready"]
+      ).map { |post| post.dequeue }
+    render json: { message: 'Posts dequeued successfully.' }
+  end
+
+  def bulk_destroy
+    current_user.posts.where(
+        id: params[:ids]
+      ).destroy_all
+    render json: { message: 'Posts were destroyed successfully.' }
   end
 
   private

@@ -10,9 +10,9 @@
       <dt class="label label-default"><%= model_class.human_attribute_name(:state) %></dt>
       <dd><pre class="prettyprint"><%= @post.state %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:scheduled_at) %></dt>
-      <dd><pre class="prettyprint"><%=l(@post.scheduled_at, format: :long) rescue nil %></pre></dd>
+      <dd><pre class="prettyprint"><%=l(@post.scheduled_at.try(:localtime), format: :long) rescue nil %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:sent_at) %></dt>
-      <dd><pre class="prettyprint"><%=l(@post.sent_at, format: :long) rescue nil %></pre></dd>
+      <dd><pre class="prettyprint"><%=l(@post.sent_at.try(:localtime), format: :long) rescue nil %></pre></dd>
       <dt class="label label-default"><%= model_class.human_attribute_name(:status) %></dt>
       <dd><pre class="prettyprint"><%= @post.status %></pre></dd>
       <dt class="label label-default"><%= t('helpers.post.preview') %></dt>

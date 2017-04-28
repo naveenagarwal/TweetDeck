@@ -1,10 +1,11 @@
-class PostDocumentWorker
+class CampaignDocumentWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry: false, queue: Campaign::QUEUE_NAME
 
   def perform(docuemnt_id)
     begin
       document = Document.find(docuemnt_id)
+      campaign = document.campaign
       document.update(status: 'in progress')
       records_processed = 0
       posts_added = 0
@@ -15,18 +16,16 @@ class PostDocumentWorker
         headers = CSV.open(filename, 'r') { |csv| csv.first } +  ['remarks']
         row << headers
 
+        scheduled_at = campaign.start_at.to_time.localtime
+
         CSV.foreach(filename, headers: true) do |csv|
           records_processed += 1
           data = []
           begin
-            scheduled_at = nil
-            if csv['schedule at'].present?
-              scheduled_at = csv['schedule at'].squish.downcase == "now" ?
-                Time.now : csv['schedule at'].to_time.localtime rescue nil
-            end
+            scheduled_at = csv['schedule at'].to_time.localtime rescue scheduled_at if csv['schedule at'].present?
             post = Post.create!(
-              content: csv['content'].squish,
-              state: (csv['state'].squish || 'drafted'),
+              content: csv['content'].to_s.squish,
+              state: (csv['state'] || 'ready').squish,
               scheduled_at: scheduled_at,
               document_id: document.id,
               user_id: document.user_id,
@@ -34,7 +33,7 @@ class PostDocumentWorker
             )
             data = csv.to_h.values
             if post.valid?
-              post.schedule(profile, DEFAULT_QUEUE)
+              post.schedule(profile, Campaign::QUEUE_NAME)
               data << 'post created successfully'
               posts_added += 1
             else
@@ -46,6 +45,8 @@ class PostDocumentWorker
             posts_rejected += 1
           end
           row << data
+          # byebug
+          scheduled_at += campaign.interval.send(campaign.interval_type)
         end
       end
 

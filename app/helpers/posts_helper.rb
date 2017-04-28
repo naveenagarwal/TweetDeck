@@ -19,6 +19,8 @@ module PostsHelper
       "text-warning"
     when "retweeted"
       "text-danger"
+    when "dequeued"
+      "text-warning"
     end
   end
 

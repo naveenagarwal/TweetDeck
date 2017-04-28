@@ -3,12 +3,13 @@ require 'sidekiq/api'
 class Post < ApplicationRecord
   default_scope { where("deleted_at IS NULL").order("id DESC") }
 
-  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweet_ready', 'retweeted']
+  VALID_STATES = ['drafted', 'ready', 'tweeted', 'retweet_ready', 'retweeted', 'dequeued']
   EDITABLE_STATES = ['drafted', 'ready']
 
   belongs_to :user
   belongs_to :profile, optional: true
   belongs_to :document, optional: true
+  belongs_to :campaign, optional: true
 
   has_many :media, class_name: Media.name, inverse_of: :post
 
@@ -60,7 +61,7 @@ class Post < ApplicationRecord
   def dequeue
     return if job_id.blank?
     job_dequeued = false
-    queues = [ Sidekiq::ScheduledSet.new(queue_name), Sidekiq::Queue.new(queue_name) ]
+    queues = [ Sidekiq::ScheduledSet.new(), Sidekiq::Queue.new(queue_name) ]
     queues.each do |queue|
       queue.each do |job|
         next if job.jid != job_id
@@ -68,6 +69,7 @@ class Post < ApplicationRecord
         job_dequeued = true
         self.job_id = nil
         self.queue_name = nil
+        self.state = "dequeued"
         save
         break
       end
@@ -77,7 +79,7 @@ class Post < ApplicationRecord
 
   def destroy
     self.deleted_at = Time.now
-    self.save
+    self.save(validate:  false)
   end
 
   def reschedule

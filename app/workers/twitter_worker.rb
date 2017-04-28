@@ -5,8 +5,8 @@ class TwitterWorker
   # TODO - refactor to make this IO efficent. Bring in Threading
 
   def perform(post_id, profile_id)
-    post = Post.find(post_id)
-    return if post.drafted?
+    post = Post.find_by(id: post_id)
+    return if post.blank? || post.drafted?
     begin
       profile = Profile.find(profile_id)
       client = Postman::TwitterDeck.new

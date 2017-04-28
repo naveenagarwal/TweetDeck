@@ -8,8 +8,12 @@ Rails.application.routes.draw do
   resources :posts do
     collection do
       put :bulk_update
+      put :bulk_dequeue
+      delete :bulk_destroy
     end
   end
+
+  resources :campaigns
 
   root to: "home#index"
 

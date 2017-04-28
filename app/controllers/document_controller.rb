@@ -2,7 +2,7 @@ class DocumentController < ApplicationController
 
   def index
     page = params[:page] || 1
-    @documents = current_user.documents.page page
+    @documents = current_user.documents.includes(:campaign).page page
   end
 
   def create
@@ -17,7 +17,7 @@ class DocumentController < ApplicationController
         format.html { redirect_to posts_path, notice: 'Document enqueued for processing.' }
         format.json { render :show, status: :created, location: @document }
       else
-        format.html { redirect_to posts_path, alert: "Error in docuemnt. #{@document.errors.full_messages.join(', ')}" }
+        format.html { redirect_to posts_path, alert: "Error in document. #{@document.errors.full_messages.join(', ')}" }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end

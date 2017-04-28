@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :profiles
   has_many :documents
+  has_many :campaigns
 
   def profile(provider)
     profiles.where(provider: provider).first
