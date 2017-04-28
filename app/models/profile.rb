@@ -12,8 +12,8 @@ class Profile < ApplicationRecord
               message: "Already signed up"
             }
 
-  validates :default_interval, numericality: { only_integer: true, greater_than: 0 }
-  validates :default_interval_type, inclusion: { in: VALID_INTERVAL_TYPES }
+  validates :default_interval, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true
+  validates :default_interval_type, inclusion: { in: VALID_INTERVAL_TYPES }, allow_blank: true
 
   validate :interval_fields
 
