@@ -19,7 +19,7 @@ module TwitterSeralizer
       total_breaks = content.length
 
       content.map.with_index do |string, index|
-        "#{string} #{suffix}" % { i: index + 1, n: total_breaks }
+        ("#{string} #{suffix}" % { i: index + 1, n: total_breaks }).gsub("TWITTER_BREAK", "")
       end
     end
 
