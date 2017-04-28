@@ -24,9 +24,14 @@ class PostDocumentWorker
               scheduled_at = csv['schedule at'].squish.downcase == "now" ?
                 Time.now : csv['schedule at'].to_time.localtime rescue nil
             end
+
+            if scheduled_at.blank? && profile.default_iterval_present?
+              scheduled_at = profile.default_time_from_now
+            end
+
             post = Post.create!(
               content: csv['content'].squish,
-              state: (csv['state'].squish || 'drafted'),
+              state: (csv['state'] || 'drafted').squish,
               scheduled_at: scheduled_at,
               document_id: document.id,
               user_id: document.user_id,
@@ -38,7 +43,7 @@ class PostDocumentWorker
               data << 'post created successfully'
               posts_added += 1
             else
-              data << "error - #{post.errors.full_messages.join(', ')}"
+              data << "error - #{post.errors.full_messages.join(' - ')}"
               posts_rejected += 1
             end
           rescue Exception => e

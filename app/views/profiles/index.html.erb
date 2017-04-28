@@ -1,0 +1,18 @@
+<div class="container-fluid" id="profile-left-navbar">
+  <div class="row">
+    <div class="col-sm-3 col-lg-2">
+      <nav class="navbar navbar-default navbar-fixed-side">
+        <ul class="nav navbar-nav">
+          <% @profiles.each do |profile| %>
+            <li class="<%= 'active' if params[:id] == profile.id %>">
+              <%= link_to profile.provider.humanize, edit_profile_path(profile) %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-sm-9 col-lg-10">
+      <h3>Select your profile</h3>
+    </div>
+  </div>
+</div>

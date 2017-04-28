@@ -87,6 +87,26 @@ body {
   padding-right: 0;
 }
 
+#profile-left-navbar .navbar.navbar-default.navbar-fixed-side {
+  background-color: white;
+
+  .nav.navbar-nav {
+    width: 100%;
+    li {
+      width: 100%;
+      text-align: center;
+      a {
+        color: grey;
+      }
+    }
+    li.active a {
+      background-color: #2793C9;
+      color: white;
+    }
+  }
+
+}
+
 
 // spinner css
 

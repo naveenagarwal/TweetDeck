@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        @post.schedule(current_user.profile('twitter'), DEFAULT_QUEUE) if @post.ready? &&
+        @post.schedule(@profile, DEFAULT_QUEUE) if @post.ready? &&
           @post.scheduled_at.present?
 
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -54,7 +54,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        @post.schedule(current_user.profile('twitter'), DEFAULT_QUEUE) if @post.ready? &&
+        @post.schedule(@profile, DEFAULT_QUEUE) if @post.ready? &&
           @post.scheduled_at.present?
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
@@ -115,6 +115,12 @@ class PostsController < ApplicationController
     def post_params
       params[:post][:user_id] = current_user.id
       params[:post][:scheduled_at] = params[:post][:scheduled_at].to_time.localtime if params[:post][:scheduled_at].present?
+
+      @profile = current_user.profile('twitter')
+      if params[:post][:scheduled_at].blank? && @profile.default_iterval_present?
+        params[:post][:scheduled_at] = @profile.default_time_from_now
+      end
+
       params[:post][:scheduled_at] = Time.now if params[:tweet_now] == "on"
       # params.require(:post).permit(:content, :state, :scheduled_at, :user_id, media_attributes: [:upload_doc])
       params.require(:post).permit!

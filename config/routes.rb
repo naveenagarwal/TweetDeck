@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :document, only: [:index, :create]
+  resources :profiles, only: [:index, :edit, :update]
 
   # get 'omniauth_session/create'
 
