@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428161641) do
+ActiveRecord::Schema.define(version: 20170501044401) do
 
   create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -52,22 +52,22 @@ ActiveRecord::Schema.define(version: 20170428161641) do
     t.index ["post_id"], name: "index_media_on_post_id", using: :btree
   end
 
-  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.text     "content",      limit: 65535
     t.string   "state"
     t.datetime "sent_at"
-    t.text     "status",       limit: 65535
-    t.text     "job_id",       limit: 65535
-    t.text     "queue_name",   limit: 65535
+    t.text     "status",       limit: 16777215
+    t.text     "job_id",       limit: 16777215
+    t.text     "queue_name",   limit: 16777215
     t.integer  "profile_id"
     t.integer  "document_id"
     t.datetime "deleted_at"
-    t.text     "tweet_ids",    limit: 65535
+    t.text     "tweet_ids",    limit: 16777215
     t.datetime "retweeted_at"
-    t.text     "media_ids",    limit: 65535
+    t.text     "media_ids",    limit: 16777215
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.datetime "scheduled_at"
     t.integer  "campain_id"
     t.integer  "campaign_id"
