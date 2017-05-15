@@ -10,200 +10,200 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- * require_tree .
- * require_self
+ *
+ *
  */
 
  // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
-@import "bootstrap-sprockets";
-@import "bootstrap";
+// @import "bootstrap-sprockets";
+// @import "bootstrap";
 
-form.docuement-upload-form {
-  margin: 0 5px 0 5px;
-}
+// form.docuement-upload-form {
+//   margin: 0 5px 0 5px;
+// }
 
-.aliceblue {
-  background-color: aliceblue;
-}
+// .aliceblue {
+//   background-color: aliceblue;
+// }
 
-#tweet-preview.list-group {
+// #tweet-preview.list-group {
 
-    li.list-group-item, li.list-group-item:first-child {
-      background-color: aliceblue;
-      height: 60px;
-      margin: 10px;
-    }
-}
+//     li.list-group-item, li.list-group-item:first-child {
+//       background-color: aliceblue;
+//       height: 60px;
+//       margin: 10px;
+//     }
+// }
 
-#home .thumbnail {
-  img {
-    width: 171px;
-    height: 180px;
-  }
-  .caption p {
-    font-size: 20px;
-    font-weight: bolder;
-  }
-  .caption h3 {
-    color: grey;
-  }
-}
+// #home .thumbnail {
+//   img {
+//     width: 171px;
+//     height: 180px;
+//   }
+//   .caption p {
+//     font-size: 20px;
+//     font-weight: bolder;
+//   }
+//   .caption h3 {
+//     color: grey;
+//   }
+// }
 
-.navbar-default .navbar-header .navbar-brand {
-  font-weight: bolder;
-}
+// .navbar-default .navbar-header .navbar-brand {
+//   font-weight: bolder;
+// }
 
-.nav.navbar-nav li a, .navbar a.navbar-brand {
-   color: #fff;
- }
+// .nav.navbar-nav li a, .navbar a.navbar-brand {
+//    color: #fff;
+//  }
 
-.navbar.navbar-default {
-  background-color: #2793C9;
-}
+// .navbar.navbar-default {
+//   background-color: #2793C9;
+// }
 
-.nav.navbar-nav ul.dropdown-menu.custom-ul li a {
-  color: grey;
-}
+// .nav.navbar-nav ul.dropdown-menu.custom-ul li a {
+//   color: grey;
+// }
 
-body {
-  color: #666;
-}
+// body {
+//   color: #666;
+// }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: #666;
-  background-color: white;
-}
+// .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
+// .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+//   color: #666;
+//   background-color: white;
+// }
 
-.delete-posts-link {
-  margin: 20px 0;
-}
+// .delete-posts-link {
+//   margin: 20px 0;
+// }
 
-.interval-left {
-  padding-left: 0;
-}
+// .interval-left {
+//   padding-left: 0;
+// }
 
-.interval-right {
-  padding-right: 0;
-}
+// .interval-right {
+//   padding-right: 0;
+// }
 
-#profile-left-navbar .navbar.navbar-default.navbar-fixed-side {
-  background-color: white;
+// #profile-left-navbar .navbar.navbar-default.navbar-fixed-side {
+//   background-color: white;
 
-  .nav.navbar-nav {
-    width: 100%;
-    li {
-      width: 100%;
-      text-align: center;
-      a {
-        color: grey;
-      }
-    }
-    li.active a {
-      background-color: #2793C9;
-      color: white;
-    }
-  }
+//   .nav.navbar-nav {
+//     width: 100%;
+//     li {
+//       width: 100%;
+//       text-align: center;
+//       a {
+//         color: grey;
+//       }
+//     }
+//     li.active a {
+//       background-color: #2793C9;
+//       color: white;
+//     }
+//   }
 
-}
+// }
 
 
-// spinner css
+// // spinner css
 
-#spinner {
-  top: 25%;
-  bottom: 25%;
-  left: 25%;
-  right: 25%;
-  position: fixed;
-  z-index: 999;
-}
-.sk-folding-cube {
-  margin: 20px auto;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  -webkit-transform: rotateZ(45deg);
-          transform: rotateZ(45deg);
-}
+// #spinner {
+//   top: 25%;
+//   bottom: 25%;
+//   left: 25%;
+//   right: 25%;
+//   position: fixed;
+//   z-index: 999;
+// }
+// .sk-folding-cube {
+//   margin: 20px auto;
+//   width: 40px;
+//   height: 40px;
+//   position: relative;
+//   -webkit-transform: rotateZ(45deg);
+//           transform: rotateZ(45deg);
+// }
 
-.sk-folding-cube .sk-cube {
-  float: left;
-  width: 50%;
-  height: 50%;
-  position: relative;
-  -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
-}
-.sk-folding-cube .sk-cube:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #333;
-  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
-          animation: sk-foldCubeAngle 2.4s infinite linear both;
-  -webkit-transform-origin: 100% 100%;
-      -ms-transform-origin: 100% 100%;
-          transform-origin: 100% 100%;
-}
-.sk-folding-cube .sk-cube2 {
-  -webkit-transform: scale(1.1) rotateZ(90deg);
-          transform: scale(1.1) rotateZ(90deg);
-}
-.sk-folding-cube .sk-cube3 {
-  -webkit-transform: scale(1.1) rotateZ(180deg);
-          transform: scale(1.1) rotateZ(180deg);
-}
-.sk-folding-cube .sk-cube4 {
-  -webkit-transform: scale(1.1) rotateZ(270deg);
-          transform: scale(1.1) rotateZ(270deg);
-}
-.sk-folding-cube .sk-cube2:before {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s;
-}
-.sk-folding-cube .sk-cube3:before {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s;
-}
-.sk-folding-cube .sk-cube4:before {
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
-}
-@-webkit-keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0;
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1;
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0;
-  }
-}
+// .sk-folding-cube .sk-cube {
+//   float: left;
+//   width: 50%;
+//   height: 50%;
+//   position: relative;
+//   -webkit-transform: scale(1.1);
+//       -ms-transform: scale(1.1);
+//           transform: scale(1.1);
+// }
+// .sk-folding-cube .sk-cube:before {
+//   content: '';
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: #333;
+//   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+//           animation: sk-foldCubeAngle 2.4s infinite linear both;
+//   -webkit-transform-origin: 100% 100%;
+//       -ms-transform-origin: 100% 100%;
+//           transform-origin: 100% 100%;
+// }
+// .sk-folding-cube .sk-cube2 {
+//   -webkit-transform: scale(1.1) rotateZ(90deg);
+//           transform: scale(1.1) rotateZ(90deg);
+// }
+// .sk-folding-cube .sk-cube3 {
+//   -webkit-transform: scale(1.1) rotateZ(180deg);
+//           transform: scale(1.1) rotateZ(180deg);
+// }
+// .sk-folding-cube .sk-cube4 {
+//   -webkit-transform: scale(1.1) rotateZ(270deg);
+//           transform: scale(1.1) rotateZ(270deg);
+// }
+// .sk-folding-cube .sk-cube2:before {
+//   -webkit-animation-delay: 0.3s;
+//           animation-delay: 0.3s;
+// }
+// .sk-folding-cube .sk-cube3:before {
+//   -webkit-animation-delay: 0.6s;
+//           animation-delay: 0.6s;
+// }
+// .sk-folding-cube .sk-cube4:before {
+//   -webkit-animation-delay: 0.9s;
+//           animation-delay: 0.9s;
+// }
+// @-webkit-keyframes sk-foldCubeAngle {
+//   0%, 10% {
+//     -webkit-transform: perspective(140px) rotateX(-180deg);
+//             transform: perspective(140px) rotateX(-180deg);
+//     opacity: 0;
+//   } 25%, 75% {
+//     -webkit-transform: perspective(140px) rotateX(0deg);
+//             transform: perspective(140px) rotateX(0deg);
+//     opacity: 1;
+//   } 90%, 100% {
+//     -webkit-transform: perspective(140px) rotateY(180deg);
+//             transform: perspective(140px) rotateY(180deg);
+//     opacity: 0;
+//   }
+// }
 
-@keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0;
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1;
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0;
-  }
-}
+// @keyframes sk-foldCubeAngle {
+//   0%, 10% {
+//     -webkit-transform: perspective(140px) rotateX(-180deg);
+//             transform: perspective(140px) rotateX(-180deg);
+//     opacity: 0;
+//   } 25%, 75% {
+//     -webkit-transform: perspective(140px) rotateX(0deg);
+//             transform: perspective(140px) rotateX(0deg);
+//     opacity: 1;
+//   } 90%, 100% {
+//     -webkit-transform: perspective(140px) rotateY(180deg);
+//             transform: perspective(140px) rotateY(180deg);
+//     opacity: 0;
+//   }
+// }
 
 // end spinner css

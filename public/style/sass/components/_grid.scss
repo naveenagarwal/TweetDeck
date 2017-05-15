@@ -1,0 +1,80 @@
+/* Helper CSS */
+
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0;
+}
+
+.row [class*="col-"] {
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0 15px;
+}
+
+.col-1 {
+    width: calc(8.33333%*1);
+}
+
+.col-2 {
+    width: calc(8.33333%*2);
+}
+
+.col-3 {
+    width: calc(8.33333%*3);
+}
+
+.col-4 {
+    width: calc(8.33333%*4);
+}
+
+.col-5 {
+    width: calc(8.33333%*5);
+}
+
+.col-6 {
+    width: calc(8.33333%*6);
+}
+
+.col-7 {
+    width: calc(8.33333%*7);
+}
+
+.col-8 {
+    width: calc(8.33333%*8);
+}
+
+.col-9 {
+    width: calc(8.33333%*9);
+}
+
+.col-10 {
+    width: calc(8.33333%*10);
+}
+
+.col-11 {
+    width: calc(8.33333%*11);
+}
+
+.col-12 {
+    width: calc(8.33333%*12);
+}
+
+.padding {
+    padding-left: 15px;
+    padding-right: 15px;
+}

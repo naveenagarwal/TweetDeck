@@ -1,68 +1,54 @@
-<div class="row" id="home">
+<% @body_class_name = "create-page" %>
+<main class="content-wrapper">
+  <%= render partial: '/layouts/sidebar' %>
+  <section class="row main-content">
+    <div class="col-2">
 
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("drafted.png") %>
-      <div class="caption text-center">
-        <h3>Drafted Tweets</h3>
-        <p class="text-info"><%= @stats[:drafted] %></p>
+    </div>
+    <div class="col-10 row main-area">
+      <div class="col-9 main-wrapper">
+        <div class="create-tweet">
+            <h2 class="card-header">Create New Post</h2>
+            <%= form_for @post, html: { class: 'form-wrapper' } do |f| %>
+              <textarea name="post[content]"><%= @post.content %></textarea>
+              <div class="row post-attr">
+                <div class="media-wrapper">
+                  <input type="file" id="media_upload1" name="post[media_attributes][0][upload_doc]">
+                  <label id="image-preview" data-tooltip="Select image to be uploaded" for="media_upload1"><i class="fa fa-camera"></i>
+                  </label>
+                  <input type="file" id="media_upload2" name="post[media_attributes][1][upload_doc]">
+                  <label for="media_upload2"><i class="fa fa-camera"></i></label>
+                  <input type="file" id="media_upload3" name="post[media_attributes][2][upload_doc]">
+                  <label for="media_upload3"><i class="fa fa-camera"></i></label>
+                  <input type="file" id="media_upload4" name="post[media_attributes][3][upload_doc]">
+                  <label for="media_upload4"><i class="fa fa-camera"></i></label>
+                </div>
+                <div class="scheduler">
+                  <label>Schedule at:</label>
+                  <input type="text" class="schedule_post" name="post[scheduled_at]" value="">
+                </div>
+              </div>
+              <div class="post-controls">
+                <input type="hidden" name="post[state]" id="post_state">
+                <input type="hidden" name="tweet_now" id="post_tweet_now">
+                <input class="draft" id="draft_now" type="submit" name="commit" value="Save for later">
+                <input class="post" id="post_now" type="submit" name="commit" value="Post Now">
+              </div>
+            <% end %>
+        </div>
+      </div>
+      <div class="col-3 block-wrapper">
+        <div class="side-blocks campaign-block">
+          <div class="item-wrapper">
+            <a href="/campaign">Start new Campaign</a>
+          </div>
+        </div>
+        <div class="side-blocks import-block">
+          <div class="item-wrapper">
+            <a href="/import">Import Now</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("ready.png") %>
-      <div class="caption text-center">
-        <h3>Ready Tweets</h3>
-        <p class="text-success"><%= @stats[:ready] %></p>
-
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("tweeted.png") %>
-      <div class="caption text-center">
-        <h3>Tweeted tweets</h3>
-        <p class="text-warning"><%= @stats[:tweeted] %></p>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("retweeted.png") %>
-      <div class="caption text-center">
-        <h3>Retweeted Tweets</h3>
-        <p class="text-danger"><%= @stats[:retweeted] %></p>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("imported.png") %>
-      <div class="caption text-center">
-        <h3>Posts imported</h3>
-        <p class="text-active"><%= @stats[:imported_posts].to_i %></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= image_tag("rejected.jpeg") %>
-      <div class="caption text-center">
-        <h3>Posts rejected</h3>
-        <p class="text-danger"><%= @stats[:rejected_posts].to_i %></p>
-      </div>
-    </div>
-  </div>
-
-</div>
+  </section>
+</main>

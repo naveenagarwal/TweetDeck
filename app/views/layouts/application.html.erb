@@ -1,76 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js" lang="">
   <head>
     <title>TweetDeck</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%# javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Barbet</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="/style/flatpickr.css"/>
+    <link rel="stylesheet" href="/style/stylesheets/style.css"/>
   </head>
 
-  <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">TweetDeck</a>
-        </div>
+  <body class="<%= @body_class_name || 'home-page' %>">
+    <div class="canvas">
+      <% if current_user %>
+        <%= render partial: '/layouts/nav' %>
+        <main class="content-wrapper">
+          <%= render partial: '/layouts/sidebar' %>
+          <%= yield %>
+        </main>
+      <% else %>
+        <%= yield %>
+      <% end %>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <% if current_user %>
-            <ul class="nav navbar-nav">
-              <li class="<%= 'active' if current_page?(posts_path) %>">
-                <%= link_to t("helpers.link.posts"), posts_path %>
-              </li>
-              <li class="<%= 'active' if current_page?(document_index_path) %>" >
-                <%= link_to t("helpers.link.documents"), document_index_path %>
-              </li>
-              <li class="<%= 'active' if current_page?(campaigns_path) %>" >
-                <%= link_to t("helpers.link.campaigns"), campaigns_path %>
-              </li>
-            </ul>
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="To be implemented">
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <b class="caret"></b></a>
-                <ul class="dropdown-menu custom-ul">
-                  <li><%= link_to t('helpers.manage_profiles'), profiles_path, class: "btn"  %></li>
-                  <li><%= link_to t('helpers.logout'), destroy_user_session_path, class: "btn", method: :delete %></li>
-                </ul>
-              </li>
-            </ul>
-          <% end %>
-        </div><!-- /.navbar-collapse -->
-      </div>
-    </nav>
-    <div class="container">
-      <%= bootstrap_flash %>
-      <%= yield %>
-      <%= render "/shared/status_model" %>
-      <%= render "/shared/dequeue_confirm_model" %>
-      <%= render "/shared/delete_posts_confirm_model" %>
-
-
+    <%= render partial: '/layouts/footer' %>
     </div>
-    <!-- spinner -->
-    <div class="sk-folding-cube hide" id="spinner">
-      <div class="sk-cube1 sk-cube"></div>
-      <div class="sk-cube2 sk-cube"></div>
-      <div class="sk-cube4 sk-cube"></div>
-      <div class="sk-cube3 sk-cube"></div>
-    </div>
-    <!-- end spinner -->
+    </main>
+
+    <%= render partial: '/layouts/mobile-nav' %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+
+    <!-- <script src="/bx-slider/jquery.bxslider.min.js"></script> -->
+    <!-- <script src="/js/vendor/jquery-1.11.3.min.js"></script> -->
+    <script src="/js/flatpickr.js"></script>
+    <script src="/js/uploadPreview.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>

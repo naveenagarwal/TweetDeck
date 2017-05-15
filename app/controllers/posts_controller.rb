@@ -8,10 +8,11 @@ class PostsController < ApplicationController
     page = params[:page] || 1
     conditions = {}
     conditions.merge!({campaign_id: params[:campaign_id]}) if params[:campaign_id].present?
+    conditions.merge!({ state: params[:state]}) if params[:state].present?
 
     @posts = current_user.posts.where(conditions).includes(:campaign)
     @count = @posts.count
-    @posts = @posts.page page
+    @posts = @posts.page(page)
   end
 
   # GET /posts/1
@@ -40,10 +41,10 @@ class PostsController < ApplicationController
         @post.schedule(@profile, DEFAULT_QUEUE) if @post.ready? &&
           @post.scheduled_at.present?
 
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new }
+        format.html { redirect_to root_url, alert: 'Error creating post.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
   def index
-    @stats = get_posts_stats
+    # @stats = get_posts_stats
+    content = params[:template].present? ?
+        current_user.posts.find_by(id: params[:template]).try(:content) : nil
+    @post = Post.new(content: content)
   end
 
   private

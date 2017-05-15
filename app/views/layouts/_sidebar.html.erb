@@ -1,0 +1,26 @@
+<aside class="col-2 main-sidebar">
+  <ul class="list">
+    <li><a href="/"><i class="fa fa-edit"></i> Create Post</a></li>
+    <li><a id="import_link" href="/documents"><i class="fa fa-download"></i> Import <i class="drop-down fa fa-caret-right"></i></a>
+      <ul class="inner-list">
+        <li><a id="logs" href="logs">Logs</a></li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="list">
+    <li><a href="/campaigns"><i class="fa fa-area-chart"></i> My Campaign</a></li>
+  </ul>
+
+  <ul class="list">
+    <li><a id="my_tweets_link" href="#"><i class="fa fa-twitter-square"></i> My Tweets <i class="drop-down fa fa-caret-right"></i></a>
+      <ul class="inner-list four <%= params[:state].present? ? 'active' : '' %>">
+        <li class="ready <%= params[:state] == 'ready' ? 'active' : '' %>"><a href="/posts?state=ready">Ready</a></li>
+        <li class="tweeted <%= params[:state] == 'tweeted' ? 'active' : '' %>"><a href="/posts?state=tweeted">Tweeted</a></li>
+        <li class="drafts <%= params[:state] == 'drafted' ? 'active' : '' %>"><a href="/posts?state=drafted">Drafts</a></li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="list">
+    <li><a href="/settings"><i class="fa fa-gears"></i> Settings</a></li>
+  </ul>
+</aside>
