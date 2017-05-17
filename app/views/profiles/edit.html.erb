@@ -1,66 +1,47 @@
-<div class="container-fluid" id="profile-left-navbar">
-  <div class="row">
-    <div class="col-sm-3 col-lg-2">
-      <nav class="navbar navbar-default navbar-fixed-side">
-        <ul class="nav navbar-nav">
-          <% @profiles.each do |profile| %>
-            <li class="<%= params[:id].to_i == profile.id ? 'active' : '' %>">
-              <%= link_to profile.provider.humanize, edit_profile_path(profile) %>
-            </li>
+<% @body_class_name = "import-page" %>
+
+<section class="row main-content">
+  <div class="col-2">
+  </div>
+  <div class="col-10 main-area">
+    <div class="main-wrapper">
+      <div class="setting-screen">
+        <div class="card-header">
+          <h2>Settings and Privacy</h2>
+        </div>
+        <div class="settings">
+          <%= form_for @profile do |f| %>
+            <div class="form-group ">
+              <label>Default Interval:</label>
+              <div class="interval-wrapper">
+                <input class="inverval-input" type="number" class="" name="profile[default_interval]" value="<%= @profile.default_interval %>">
+                <div class="intervals">
+                  <% ["seconds", "minutes", "hours", "days", "weeks", "months" ].each do |o| %>
+                    <%= f.radio_button :default_interval_type, o, id: o %>
+                    <label for=<%= o %> ><%= o.humanize %></label>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Retweet Enable:</label>
+              <div class="checkbox_list">
+                <% if @profile.default_retweet_enable %>
+                  <input id="list1" type="checkbox" name="profile[default_retweet_enable]" checked>
+                <% else %>
+                  <input id="list1" type="checkbox" name="profile[default_retweet_enable]" >
+                <% end %>
+                <label for="list1"></label>
+              </div>
+              <p>check this if you want the default interval also works with retweets automatically.</p>
+            </div>
+            <div class="form-group controls">
+              <label></label>
+              <input type="submit" value="Save" name="">
+            </div>
           <% end %>
-          <li></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="col-sm-9 col-lg-10">
-      <h3>Update <%= @profile.provider.humanize %> Profile</h3>
-      <br /> <br /> <br />
-
-      <%= form_for @profile, html: { class: 'form-horizontal' } do |f| %>
-
-        <% if @profile.errors.any? %>
-          <div id="error_explanation">
-            <h4><%= pluralize(@profile.errors.count, "error") %> prohibited this from being saved:</h4>
-
-            <ul>
-            <% @profile.errors.full_messages.each do |msg| %>
-              <li class="alert alert-warning"><%= msg %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="form-group">
-          <%= f.label :default_retweet_enable, class: 'control-label col-md-3' %>
-          <div class="col-md-1">
-            <%= f.check_box :default_retweet_enable, class: 'text_field form-control', rows: 10 %>
-          </div>
         </div>
-
-        <div class="form-group">
-          <%= f.label :default_interval, class: 'control-label col-md-3' %>
-          <div class="col-md-5">
-            <%= f.number_field :default_interval, class: 'text_field form-control', rows: 10 %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :default_interval_type, class: 'control-label col-md-3' %>
-          <div class="col-md-5">
-            <%= f.select :default_interval_type, Profile::VALID_INTERVAL_TYPES.map{ |interval_type| [interval_type.humanize, interval_type] }, { include_blank: false }, { class: 'text_field form-control' } %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class='col-md-offset-2 col-md-5'>
-            <%= f.submit nil, class: 'btn btn-primary' %>
-            <%= link_to t('.cancel', default: t("helpers.links.cancel")),
-                        profiles_path, class: 'btn btn-default' %>
-          </div>
-        </div>
-
-      <% end %>
-
+      </div>
     </div>
   </div>
-</div>
+</section>
