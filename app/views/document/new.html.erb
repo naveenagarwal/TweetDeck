@@ -1,0 +1,30 @@
+<% @body_class_name = "import-page" %>
+<section class="row main-content">
+  <div class="col-2">
+
+  </div>
+  <div class="col-10 main-area">
+    <div class="main-wrapper">
+      <div class="import-screen">
+        <%= form_tag('/document', multipart: true, id: "document-file-post-form") do -%>
+          <input type="hidden" value="Post" name="resource_type">
+          <input id="import-csv" type="file" name="file">
+          <label class="import-csv" for="import-csv">
+            <i class="fa fa-download"></i>
+            <p id="importCSVName">Import CSV</p>
+            <span class="importMSG" id="importMSG"></span>
+            <span id="chooseCSV" class="choose">Choose file</span>
+          </label>
+        <% end %>
+        <div class="import-info">
+          <p>Please make sure that the CSV table format is same as our sample file.</p>
+          <a href="/post_sample.csv"><i class="fa  fa-arrow-circle-o-down"></i> Download Sample file</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="main-wrapper">
+      <a href="logs">Import Logs</a>
+    </div> -->
+  </div>
+</section>

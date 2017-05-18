@@ -55,6 +55,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 $('.off-canvas').addClass('animate');
             }, 100);
+            $("#document-file-post-form").submit();
         }
 
         var exactSize = (Math.round(_size * 100) / 100) + ' ' + fSExt[i];

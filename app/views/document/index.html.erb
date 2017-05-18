@@ -1,43 +1,44 @@
-<%- model_class = Document -%>
-<div class="page-header">
-  <h3>
-    <%=t '.title', default: model_class.model_name.human.pluralize.titleize %>
-  </h3>
+<% @body_class_name = "import-page" %>
 
-</div>
-<%= paginate @documents %>
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th><%= t("helpers.document.name") %></th>
-      <th><%= t("helpers.document.output") %></th>
-      <th><%= t("helpers.campaign") %></th>
-      <th><%= model_class.human_attribute_name(:resource_type) %></th>
-      <th><%= model_class.human_attribute_name(:status) %></th>
-      <th><%= model_class.human_attribute_name(:records_processed) %></th>
-      <th><%= model_class.human_attribute_name(:posts_added) %></th>
-      <th><%= model_class.human_attribute_name(:posts_rejected) %></th>
-      <th><%= model_class.human_attribute_name(:job_id) %></th>
-      <th><%= model_class.human_attribute_name(:queue_name) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.url %></td>
-        <td><%= link_to File.basename(document.output_filename), document.output_url if File.exists?(document.output_filename) %></td>
-        <td><%= link_to document.campaign.name, campaign_path(document.campaign) if document.campaign.present? %></td>
-        <td><%= document.resource_type %></td>
-        <td><%= document.status %></td>
-        <td><%= document.records_processed %></td>
-        <td><%= document.posts_added %></td>
-        <td><%= document.posts_rejected %></td>
-        <td><%= document.job_id %></td>
-        <td><%= document.queue_name %></td>
-        <td><%=l document.created_at.localtime, format: :long %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate @documents %>
+<section class="row main-content">
+
+  <div class="col-2">
+  </div>
+  <div class="col-10 main-area">
+    <%= paginate @documents %>
+    <div class="main-wrapper">
+      <div class="logs import-logs">
+        <div class="row card-header">
+          <h2>Imports Logs</h2>
+        </div>
+        <div class="table">
+          <ul class="row t-heading">
+            <li class="col-2 file">File</li>
+            <li class="col-2 total-entry">Total Entries</li>
+            <li class="col-2 added-entry">Entries Added</li>
+            <li class="col-2 rejected-entry">Entries Rejected</li>
+            <li class="col-2 upload-on">Uploaded on</li>
+            <li class="col-2 status">Status</li>
+            <li class="col-2 output">Output</li>
+          </ul>
+          <% @documents.each do |document| %>
+            <ul class="row t-data success">
+              <li class="col-2 file">
+                <%= link_to File.basename(document.upload_doc.file.file), document.upload_doc.url %>
+              </li>
+              <li class="col-2 total-entry"><%= document.records_processed %></li>
+              <li class="col-2 added-entry"><%= document.posts_added %></li>
+              <li class="col-2 rejected-entry"><%= document.posts_rejected %></li>
+              <li class="col-2 upload-on"><%=l document.created_at.localtime, format: :long %></li>
+              <li class="col-2 status"><%= document.status %></li>
+              <li class="col-2 output">
+                <%= link_to File.basename(document.output_filename), document.output_url if File.exists?(document.output_filename) %>
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <%= paginate @documents %>
+  </div>
+</section>

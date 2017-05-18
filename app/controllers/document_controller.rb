@@ -14,10 +14,10 @@ class DocumentController < ApplicationController
       if @document.save
         job_id = PostDocumentWorker.perform_async(@document.id)
         @document.update(job_id: job_id, queue_name: 'default')
-        format.html { redirect_to posts_path, notice: 'Document enqueued for processing.' }
+        format.html { redirect_to document_index_path, notice: 'Document enqueued for processing.' }
         format.json { render :show, status: :created, location: @document }
       else
-        format.html { redirect_to posts_path, alert: "Error in document. #{@document.errors.full_messages.join(', ')}" }
+        format.html { redirect_to document_index_path, alert: "Error in document. #{@document.errors.full_messages.join(', ')}" }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
