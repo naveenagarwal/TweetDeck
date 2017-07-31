@@ -1,3 +1,5 @@
+<% @body_class_name = "campaign-page" %>
+
 <%- model_class = Campaign -%>
 <div class="page-header">
   <h1>
@@ -47,3 +49,175 @@
     <% end %>
   </tbody>
 </table>
+
+<section class="row main-content">
+  <div class="col-2">
+
+  </div>
+  <div class="col-10 main-area">
+    <div class="main-wrapper">
+      <div class="create-tweet">
+          <h2 class="card-header">Start New Campaign</h2>
+          <%= form_for @campaign, html: { class: 'form-wrapper', multipart: true } do |f| %>
+            <div class="form-group">
+              <label>Campaign Name:</label>
+              <input type="text" name="campaign[name]">
+            </div>
+            <div class="form-group scheduler">
+              <label>Start at:</label>
+              <input type="text" class="schedule_post" name="campaign[start_at]" value="<%= @campaign.start_at.try(:strftime, '%d-%m-%y, %I:%M %p') %>">
+            </div>
+            <div class="form-group ">
+              <label>In Every(Interval):</label>
+              <div class="interval-wrapper">
+                <%= f.number_field :interval, class: 'inverval-input' %>
+                <div class="intervals">
+                  <% ["seconds", "minutes", "hours", "days", "weeks", "months" ].each do |o| %>
+                    <%= f.radio_button :interval_type, o, id: o %>
+                    <label for=<%= o %> ><%= o.humanize %></label>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="form-group upload_post">
+              <label>Choose your file:</label>
+              <div class="import-campaign-file">
+                <input type="file" id="import-csv" name="campaign[document_id]">
+                <label data-tooltip="Import valid CSV file" for="import-csv">
+                  <i class="fa fa-download"></i>
+                  <span id="cImportMsg">Import</span>
+                </label>
+                <a href="/post_sample.csv">Download Sample File</a>
+              </div>
+            </div>
+            <div class="form-group post-controls">
+              <input class="post" id="create-campaign" type="submit" name="commit" value="Create Campaign">
+            </div>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="main-wrapper">
+      <div class="logs campaign-logs">
+        <div class="row card-header">
+          <h2>Campaign Logs</h2>
+          <div class="list-controls">
+            <a class="delete-selected" href="#" disabled>Delete Selected</a>
+          </div>
+        </div>
+        <div class="table">
+          <ul class="row t-heading">
+            <li class="checkbox_list">
+              <input type="checkbox" id="select_all" name="">
+              <label for="select_all"></label>
+            </li>
+            <li class="col-3 name">Campaign Name</li>
+            <li class="col-1 status">Status</li>
+            <li class="col-2 start-date">Start Date</li>
+            <li class="col-2 interval">Time Interval</li>
+            <li class="col-2 created-on">Created on</li>
+            <li class="col-2 view">View</li>
+            <li class="col-1 actions">Actions</li>
+          </ul>
+          <ul class="row t-data scheduled">
+            <li class="checkbox_list">
+              <input id="list1" class="checkbox" type="checkbox" name="check[]">
+              <label for="list1"></label>
+            </li>
+            <li class="col-3 name">Drupal Camp Delhi</li>
+            <li class="col-1 status">Scheduled</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+          <ul class="row t-data running">
+            <li class="checkbox_list">
+              <input id="list2" class="checkbox" type="checkbox" name="check[]">
+              <label for="list2"></label>
+            </li>
+            <li class="col-3 name">Drupal Camp Delhi</li>
+            <li class="col-1 status">Running</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+          <ul class="row t-data success">
+            <li class="checkbox_list">
+              <input id="list3" class="checkbox" type="checkbox" name="check[]">
+              <label for="list3"></label>
+            </li>
+            <li class="col-3 name">Srijan Code Sprint</li>
+            <li class="col-1 status">Finished</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+          <ul class="row t-data success">
+            <li class="checkbox_list">
+              <input id="list4" class="checkbox" type="checkbox" name="check[]">
+              <label for="list4"></label>
+            </li>
+            <li class="col-3 name">Design Hackethon</li>
+            <li class="col-1 status">Finished</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+          <ul class="row t-data failed">
+            <li class="checkbox_list">
+              <input id="list5" class="checkbox" type="checkbox" name="check[]">
+              <label for="list5"></label>
+            </li>
+            <li class="col-3 name">Webinar - Managing QA Touch Points in an Agile Project</li>
+            <li class="col-1 status">Failed</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+          <ul class="row t-data success">
+            <li class="checkbox_list">
+              <input id="list6" class="checkbox" type="checkbox" name="check[]">
+              <label for="list6"></label>
+            </li>
+            <li class="col-3 name">Drupal Camp Goa</li>
+            <li class="col-1 status">Finished</li>
+            <li class="col-2 start-date">10-05-17, 8:00 AM</li>
+            <li class="col-2 interval">2 hours</li>
+            <li class="col-2 created-on">05-05-17, 12:25 PM</li>
+            <li class="col-2 view"><a href="campaign-posts">View Campaign</a></li>
+            <li class="col-1 actions">
+              <a data-tooltip="Edit this campaign" href="#"><i class="fa fa-edit"></i></a>
+              <a data-tooltip="Delete this campaign" class="delete" href="#"><i class="fa fa-trash-o"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

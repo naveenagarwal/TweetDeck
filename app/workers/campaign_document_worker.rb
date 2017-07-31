@@ -45,7 +45,6 @@ class CampaignDocumentWorker
             posts_rejected += 1
           end
           row << data
-          # byebug
           scheduled_at += campaign.interval.send(campaign.interval_type)
         end
       end

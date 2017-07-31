@@ -4,6 +4,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns
   # GET /campaigns.json
   def index
+    @campaign = Campaign.new
     @campaigns = current_user.campaigns.all
   end
 
@@ -33,11 +34,14 @@ class CampaignsController < ApplicationController
       if @campaign.save
         job_id = CampaignDocumentWorker.perform_async(@campaign.document.id)
         @campaign.document.update(job_id: job_id, queue_name: Campaign::QUEUE_NAME)
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }
-        format.json { render :show, status: :created, location: @campaign }
+        format.html { redirect_to campaigns_path, notice: 'Campaign was successfully created.' }
+        #format.json { render :show, status: :created, location: @campaign }
       else
-        format.html { render :new }
-        format.json { render json: @campaign.errors, status: :unprocessable_entity }
+        format.html {
+          @campaigns = current_user.campaigns.all
+          render :index
+        }
+        #format.json { render json: @campaign.errors, status: :unprocessable_entity }
       end
     end
   end
