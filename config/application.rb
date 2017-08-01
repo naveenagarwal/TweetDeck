@@ -15,6 +15,6 @@ module TweetDeck
 
     config.autoload_paths += %W( lib/ )
 
-    config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths << "#{Rails.root}/lib"
   end
 end
